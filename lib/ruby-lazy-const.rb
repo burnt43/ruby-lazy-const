@@ -1,7 +1,7 @@
 require 'pathname'
 require 'active_support'
 
-module RubyLazyConst
+module LazyConst
   class Config
     class << self
       attr_accessor :base_dir
@@ -20,7 +20,7 @@ class Object
         end
 
       possible_pathname =
-        Pathname.new(RubyLazyConst::Config.base_dir)
+        Pathname.new(LazyConst::Config.base_dir)
         .join(possible_sub_pathname)
         .join("#{ActiveSupport::Inflector.underscore(missing_const_name.to_s)}.rb")
 
