@@ -1,6 +1,5 @@
 require 'pathname'
-
-puts "THIS IS A TEST"
+require 'active_support'
 
 class Object
   CONST_MISSING_DEFINITION =
@@ -9,14 +8,15 @@ class Object
         if self == Object
           Pathname.new('.')
         else
-          Pathname.new(name.split('::').map(&:underscore).join('/'))
+          Pathname.new(name.split('::').map {|const_name| ActiveSupport::Inflector.underscore(const_name)}.join('/'))
         end
 
       possible_pathname =
         Pathname.new(File.expand_path(__FILE__)).parent
         .join(possible_sub_pathname)
-        .join("#{missing_const_name.to_s.underscore}.rb")
+        .join("#{ActiveSupport::Inflector.underscore(missing_const_name.to_s)}.rb")
 
+      puts "JCARSON: #{possible_pathname}"
       if possible_pathname.exist?
         require possible_pathname
 
