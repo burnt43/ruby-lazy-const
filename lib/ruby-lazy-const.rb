@@ -1,5 +1,7 @@
 require 'pathname'
 
+puts "THIS IS A TEST"
+
 class Object
   CONST_MISSING_DEFINITION =
     proc do |missing_const_name|
