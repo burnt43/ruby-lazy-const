@@ -24,7 +24,6 @@ class Object
         .join(possible_sub_pathname)
         .join("#{ActiveSupport::Inflector.underscore(missing_const_name.to_s)}.rb")
 
-      puts "JCARSON: #{possible_pathname}"
       if possible_pathname.exist?
         require possible_pathname
 
