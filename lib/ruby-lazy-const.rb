@@ -5,6 +5,7 @@ module LazyConst
   class Config
     class << self
       attr_accessor :base_dir
+      attr_accessor :const_load_handler
     end
   end
 end
@@ -31,6 +32,10 @@ class Object
           constant = const_get(missing_const_name)
 
           constant.define_singleton_method(:const_missing, CONST_MISSING_DEFINITION)
+
+          if (handler = LazyConst::Config.const_load_handler).is_a?(Proc)
+            handler.call(constant)
+          end
 
           constant
         else
