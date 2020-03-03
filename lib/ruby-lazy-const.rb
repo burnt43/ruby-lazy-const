@@ -26,7 +26,7 @@ class Object
         .join("#{ActiveSupport::Inflector.underscore(missing_const_name.to_s)}.rb")
 
       if possible_pathname.exist?
-        require possible_pathname
+        require possible_pathname.relative? ? "./#{possible_pathname.to_s}" : possible_pathname.to_s
 
         if const_defined?(missing_const_name)
           constant = const_get(missing_const_name)
